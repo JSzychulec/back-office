@@ -1,0 +1,6 @@
+{
+	"beautify.ignore": "/client/**/*",
+	"brace_style": "collapse,preserve-inline",
+	"indent_size": 1,
+	"indent_char": "\t"
+}
