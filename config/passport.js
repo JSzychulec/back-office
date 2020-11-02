@@ -12,6 +12,7 @@ passport.use('local-login', new LocalStrategy({
 	usernameField: 'email',
 }, async function(username, password, done) {
 	try {
+		console.log(username)
 		const user = await User.findOne({ email: username }).exec()
 		if (!user || await user.verifyPassword(password) === false) return done(null, false, { message: 'Incorrect username or password' })
 		return done(null, user)

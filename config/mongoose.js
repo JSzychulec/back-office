@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { mongo } = require('./env');
+const { env, mongo } = require('./env');
 
 const options = {
 	useNewUrlParser: true,
@@ -11,11 +11,11 @@ const options = {
  */
 
 mongoose.connection.on('error', (error) => {
-	console.log(error)
+	env !== "production" && console.log(error)
 })
 
 mongoose.connection.on('open', () => {
-	console.log('Mongoose connection acquired');
+	env !== "production" && console.log('Mongoose connection acquired');
 })
 
 

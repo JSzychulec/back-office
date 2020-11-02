@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt');
 
-const userSchema = new Schema({
+const UserSchema = new Schema({
 	email: {
 		type: String,
 		lowercase: true,
@@ -9,6 +9,14 @@ const userSchema = new Schema({
 		required: true,
 		unique: true,
 		alias: 'username'
+	},
+	name: {
+		type: String,
+		trim: true,
+	},
+	surname: {
+		type: String,
+		trim: true
 	},
 	password: {
 		type: String,
@@ -20,18 +28,13 @@ const userSchema = new Schema({
 		enum: ['admin', 'user'],
 		default: 'user',
 		required: true,
-	},
-	social_media: {
-		type: Map,
-		of: String,
 	}
 }, { timestamps: true })
-
 
 /**
  * Verify that passed password matches encrypted one.
  */
-userSchema.methods.verifyPassword = async pass => {
+UserSchema.methods.verifyPassword = async pass => {
 	try {
 		return await bcrypt.compare(pass, this.password)
 	} catch (error) {
@@ -39,11 +42,10 @@ userSchema.methods.verifyPassword = async pass => {
 	}
 }
 
-
 /**
  * Encrypting password before saving
  */
-userSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function(next) {
 	try {
 		this.password = await bcrypt.hash(this.password, 10);
 		next();
@@ -52,4 +54,4 @@ userSchema.pre('save', async function(next) {
 	}
 })
 
-module.exports = model('user', userSchema);
+module.exports = model('User', UserSchema);

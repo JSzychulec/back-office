@@ -1,4 +1,6 @@
 const { get, list, update } = require('./services');
+const User = require('./model')
+
 
 exports.profile = () => async (req, res, next) => {
 	try {
@@ -17,12 +19,3 @@ exports.update = () => async (req, res, next) => {
 		next(error)
 	}
 }
-
-// exports.remove = () => async (req, res, next) => {
-// 	try {
-// 		await User.deleteOne({ _id: req.user.id })
-// 		res.status(200).json({ message: `User with id ${req.user.id} removed` });
-// 	} catch (error) {
-// 		next(error)
-// 	}
-// }
